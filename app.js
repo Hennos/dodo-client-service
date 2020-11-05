@@ -1,13 +1,22 @@
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const config = require("config");
 
-var app = express();
+const objection = require("./objection");
+const dataModels = require("./dataModels");
+
+const app = express();
+
+app.set("config", config);
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+objection(app);
+
+dataModels(app);
 
 module.exports = app;
