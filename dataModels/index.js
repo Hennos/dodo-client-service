@@ -1,5 +1,7 @@
 module.exports = function (app) {
   app.set("dataModels", {
-    User: require("./user")(app),
+    Operator: require("./operator")(app),
+    Organization: require("./organization")(app),
+    Room: require("./room")(app),
   });
 };
