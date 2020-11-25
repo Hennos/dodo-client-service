@@ -26,7 +26,7 @@ class Organization extends Model {
         modelClass: Operator,
         join: {
           from: "organizations.id",
-          to: "operator.ownerId",
+          to: "operators.ownerId",
         },
       },
       rooms: {

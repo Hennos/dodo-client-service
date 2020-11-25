@@ -21,6 +21,7 @@ class Operator extends Model {
 
   static get relationMappings() {
     const Organization = require("./organization")();
+    const Room = require("./room")();
     return {
       organization: {
         relation: Model.BelongsToOneRelation,
@@ -28,6 +29,18 @@ class Operator extends Model {
         join: {
           from: "operators.ownerId",
           to: "organizations.id",
+        },
+      },
+      accessRooms: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Room,
+        join: {
+          from: "operators.id",
+          through: {
+            from: "operator_room_access_records.operatorId",
+            to: "operator_room_access_records.roomId",
+          },
+          to: "rooms.id",
         },
       },
     };
@@ -53,6 +66,7 @@ module.exports = function (app) {
     .hasTable("operators")
     .then((exists) => {
       if (!exists) {
+        console.log("Creating operators table");
         db.schema
           .createTable("operators", (table) => {
             table.increments("id");
@@ -80,6 +94,38 @@ module.exports = function (app) {
       }
     })
     .catch((e) => console.error("Error creating operators table", e)); // eslint-disable-line no-console
+
+  db.schema
+    .hasTable("operator_room_access_records")
+    .then((exists) => {
+      if (!exists) {
+        console.log("Creating operator_room_access_records table");
+        db.schema
+          .createTable("operator_room_access_records", (table) => {
+            table.increments("id");
+            table.integer("operatorId");
+            table.integer("roomId");
+            table.timestamp("createdAt");
+            table.timestamp("updatedAt");
+          })
+          .then(() => console.log("Created operator_room_access_records table")) // eslint-disable-line no-console
+          .then(() =>
+            db("operator_room_access_records").insert([
+              {
+                operatorId: 1,
+                roomId: 1,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              },
+            ])
+          )
+          .then(() => console.log("Prepare operator_room_access_records data")); // eslint-disable-line no-console
+      }
+    })
+    .catch(
+      (e) =>
+        console.error("Error creating operator_room_access_records table", e) // eslint-disable-line no-console
+    );
 
   return Operator;
 };
