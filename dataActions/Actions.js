@@ -15,8 +15,12 @@ class Actions {
     return found;
   }
 
-  async getCollection() {
-    throw new TypeError(`${this.name}: "getCollection" method not implemented`);
+  async getAll() {
+    const Model = this.getModel();
+
+    const found = await Model.query();
+
+    return found;
   }
 
   async create() {
