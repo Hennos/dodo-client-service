@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  app.set("actions", {
+  app.set("dataActions", {
     operator: require("./operator")(app),
     organization: require("./organization")(app),
     room: require("./room")(app),

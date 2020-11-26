@@ -3,9 +3,14 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const config = require("config");
 
+const operatorsRouter = require("./routes/operators");
+const organizationsRouter = require("./routes/organizations");
+const roomsRouter = require("./routes/rooms");
+
 const objection = require("./objection");
 const dataModels = require("./dataModels");
 const dataActions = require("./dataActions");
+const organization = require("./dataModels/organization");
 
 const app = express();
 
@@ -21,11 +26,15 @@ objection(app);
 dataModels(app);
 dataActions(app);
 
-// const searchOperator = app.get("actions").operator.find(1);
+app.use("/operators", operatorsRouter);
+app.use("/organizations", organizationsRouter);
+app.use("/rooms", roomsRouter);
+
+// const searchOperator = app.get("dataActions").operator.find(1);
 // const searchOperatorOrganization = app
-//   .get("actions")
+//   .get("dataActions")
 //   .operator.getOrganization(1);
-// const searchOperatorAccessRooms = app.get("actions").operator.getAccessRooms(1);
+// const searchOperatorAccessRooms = app.get("dataActions").operator.getAccessRooms(1);
 
 // Promise.all([
 //   searchOperator,
@@ -46,11 +55,11 @@ dataActions(app);
 //   });
 // });
 
-// const searchOrganization = app.get("actions").organization.find(1);
+// const searchOrganization = app.get("dataActions").organization.find(1);
 // const searchOrganizationOperators = app
-//   .get("actions")
+//   .get("dataActions")
 //   .organization.getOperators(1);
-// const searchOrganizationRooms = app.get("actions").organization.getRooms(1);
+// const searchOrganizationRooms = app.get("dataActions").organization.getRooms(1);
 
 // Promise.all([
 //   searchOrganization,
@@ -71,8 +80,8 @@ dataActions(app);
 //   });
 // });
 
-// const searchRoom = app.get("actions").room.find(1);
-// const searchRoomOrganization = app.get("actions").room.getOrganization(1);
+// const searchRoom = app.get("dataActions").room.find(1);
+// const searchRoomOrganization = app.get("dataActions").room.getOrganization(1);
 
 // Promise.all([searchRoom, searchRoomOrganization]).then(
 //   ([room, organization]) => {
