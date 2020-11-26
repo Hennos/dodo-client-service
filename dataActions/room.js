@@ -3,7 +3,8 @@ const Actions = require("./Actions");
 class Room extends Actions {
   async getOrganization(id) {
     const room = await this.find(id);
-    const searchOrganization = room.$relatedQuery("organization");
+
+    const searchOrganization = room && room.$relatedQuery("organization");
 
     return searchOrganization;
   }

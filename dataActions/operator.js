@@ -3,14 +3,17 @@ const Actions = require("./Actions");
 class Operator extends Actions {
   async getOrganization(id) {
     const operator = await this.find(id);
-    const searchOrganization = operator.$relatedQuery("organization");
+
+    const searchOrganization =
+      operator && operator.$relatedQuery("organization");
 
     return searchOrganization;
   }
 
   async getAccessRooms(id) {
     const operator = await this.find(id);
-    const searchAccessRooms = operator.$relatedQuery("accessRooms");
+
+    const searchAccessRooms = operator && operator.$relatedQuery("accessRooms");
 
     return searchAccessRooms;
   }
