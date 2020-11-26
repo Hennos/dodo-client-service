@@ -1,3 +1,6 @@
+# IDEA Directory
+.vscode
+
 # Logs
 logs
 *.log
