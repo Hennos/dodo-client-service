@@ -3,5 +3,8 @@
   "db": {
     "client": "pg",
     "connection": "postgres://clients:clients@localhost:5432/db_clients_service"
+  },
+  "amqp": {
+    "connection": "amqp://admin:admin@localhost"
   }
 }

@@ -6,11 +6,10 @@ const config = require("config");
 const operatorsRouter = require("./routes/operators");
 const organizationsRouter = require("./routes/organizations");
 const roomsRouter = require("./routes/rooms");
-
 const objection = require("./objection");
 const dataModels = require("./dataModels");
 const dataActions = require("./dataActions");
-const organization = require("./dataModels/organization");
+const rabbitmq = require("./rabbitmq/connection");
 
 const app = express();
 
@@ -25,6 +24,8 @@ objection(app);
 
 dataModels(app);
 dataActions(app);
+
+rabbitmq(app);
 
 app.use("/operators", operatorsRouter);
 app.use("/organizations", organizationsRouter);
