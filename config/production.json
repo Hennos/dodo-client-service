@@ -1,0 +1,15 @@
+{
+  "port": 15034,
+  "db": {
+    "client": "pg",
+    "connection": {
+      "host": "db-geodata",
+      "user": "geodata",
+      "password": "geodata",
+      "database": "db_geodata_service"
+    }
+  },
+  "amqp": {
+    "connection": "amqp://admin:admin@rabbitmq"
+  }
+}
